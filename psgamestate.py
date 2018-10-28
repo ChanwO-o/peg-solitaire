@@ -15,17 +15,21 @@ class PSGameOverError(Exception):
 
 class PSGameState:
     def __init__(self, rows:int, cols:int):
-        self.board = psboard()
+        self.board = self.createNewBoard(rows, cols)
+    
+    def createNewBoard(self, rows:int, cols:int) -> [[bool]]:
+        '''Creates a new game board with specified rows and columns'''
+        
+        
+           
+    def updateBoard():
+        pass
 
-
-def updateBoard():
-    pass
-
-def isFinished():
-    pass
-
-def isValidMove(fromrow:int, fromcol:int, torow:int, tocol:int) -> bool:
-    pass
+    def isFinished():
+        pass
+    
+    def isValidMove(fromrow:int, fromcol:int, torow:int, tocol:int) -> bool:
+        pass
 
 def isOutOfBounds():
     pass
