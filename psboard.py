@@ -6,11 +6,12 @@ Created on Oct 28, 2018
 import psExceptions
 import psgamestate
 
+
 class psBoard:
     def __init__(self):
-        self._board = getNewBoard(7, 7)
+        self._board = self.getNewBoard(7, 7)
 
-    def getNewBoard(rows: int, cols: int) -> [[int]]:
+    def getNewBoard(self, rows: int, cols: int) -> [[int]]:
         ''' Creates a new game board with specified rows and columns '''
         board = []
         boundindex = (rows - 3) / 2
@@ -23,8 +24,8 @@ class psBoard:
                         continue
                 row.append(1)   # fill with 1
             board.append(row)
-        
-        board[int(rows/2)][int(cols/2)] = 0 # center empty
+
+        board[int(rows/2)][int(cols/2)] = 0  # center empty
         return board
 
     def getBoard(self) -> [[int]]:
@@ -33,16 +34,16 @@ class psBoard:
 
     def get(self, row: int, col: int) -> int:
         ''' Returns value of peg at coordinate (-1 0 or 1) '''
-        if psgamestate.isOutOfBounds(row, col):
+        if self.isOutOfBounds(row, col):
             raise psExceptions.PSOutOfBoundsException()
         return self._board[row][col]
 
-    def addPeg(self, row:int, col:int) -> None:
+    def addPeg(self, row: int, col: int) -> None:
         self._board[row][col] = 1
 
-    def removePeg(self, row:int, col:int) -> None:
+    def removePeg(self, row: int, col: int) -> None:
         self._board[row][col] = 0
-    
+
     def getRows(self) -> int:
         ''' Returns number of rows of board '''
         return len(self._board)
@@ -56,5 +57,13 @@ class psBoard:
         for r in range(getRows()):
             print(r, ' ')
             for c in range(getCols()):
-                print(get(r,c))
+                print(get(r, c))
             print('\n')
+
+    def isOutOfBounds(self, row: int, col: int) -> bool:
+        ''' Checks if location is in board '''
+        if row < 0 or row > self.getRows():
+            return True
+        if col < 0 or col > self.getCols():
+            return True
+        # TODO: check for corners

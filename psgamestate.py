@@ -8,12 +8,15 @@ Verify the input and move.
 
 '''
 
+import psboard
+from psExceptions import *
+
 
 class PSGameState:
-    def __init__(self, board: [[int]]):
-        self.board = psBoard()
+    def __init__(self):
+        self.board = psboard.psBoard()
 
-    def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> (row, col):
+    def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> ():
         if fromRow - toRow > 0 and fromCol - toCol == 0:
             return (fromRow - 1, fromCol)
         elif fromRow - toRow < 0 and fromCol - toCol == 0:
@@ -27,14 +30,14 @@ class PSGameState:
 
     def makeMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> None:
         ''' add and remove peg on the board '''
-        if isValidMove() == True:
+        if self.isValidMove() == True:
             self.board.addPeg(toRow, toCol)
             self.boead.removePeg(fromRow, fromCol)
 
-    def start():
+    def start(self):
         while True:
             try:
-                isFinished()
+                self.isFinished()
 
                 while True:
                     from_input = getFromInput()
@@ -46,7 +49,7 @@ class PSGameState:
                     except (PSInvalidMoveException()):
                         print("INVALID MOVE")
 
-            except (PSGameOverException()):
+            except (PSGameOverException):
                 print("The Game is Over!")
                 break
 
@@ -57,47 +60,42 @@ class PSGameState:
     # 4. Check if Peg exists on middle of from coordinate and to coordinate
     #
 
-    def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
-        middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
+    def isValidMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
+        middle = self.calcPegMiddle(fromRow, fromCol, toRow, toCol)
         try:
-            if self.board.get(fromRow, fromCol) == 0 or self.board.get(toRow, fromCol) == 1 or self.board.get(middle[0], middle[1]) == 0 or isDiagonal(fromRow, fromCol, toRow, toCol) == False:
+            if self.board.get(fromRow, fromCol) == 0 or self.board.get(toRow, fromCol) == 1 or self.board.get(middle[0], middle[1]) == 0 or self.isDiagonal(fromRow, fromCol, toRow, toCol) == False:
                 return False
             return True
-        except:
-            raise PSInvalidMoveException()
-
-    def isOutOfBounds(row: int, col: int) -> bool:
-        ''' Checks if location is in board '''
-        if row < 0 or row > self.getRows():
-            return True
-        if col < 0 or col > self.getCols():
-            return True
-        # TODO: check for corners
+        except (PSOutOfBoundsException):
+            return False
 
     # 1. Loop all pegs and check whether there are valid moves or not
     # Return True is game state is finished.
     # Return False if game state is not finished.
-    def isFinished() -> bool:
+    def isFinished(self) -> bool:
         rows = self.board.getRows()
         cols = self.board.getCols()
         for row in range(rows):
             for col in range(cols):
-                peg = get(row, col)
+                try:
+                    peg = self.board.get(row, col)
+                except:
+                    break
                 if peg == -1:
                     pass
                 elif peg == 1:
-                    moves = getPossibleMoves(row, col)
+                    moves = self.getPossibleMoves(row, col)
                     for i in range(len(moves)):
-                        if isValidMove(row, col, moves[i][0], moves[i][1]) == True:
+                        if self.isValidMove(row, col, moves[i][0], moves[i][1]) == True:
                             return False
         raise PSGameOverException()
 
     # helper function for isFinished.
     # Take row and col of current position and return all the possible moves in list.
-    def getPossibleMoves(row, col) -> list of sets:
+    def getPossibleMoves(self, row, col) -> list:
         return [(row - 2, col), (row + 2, col), (row, col - 2), (row, col + 2)]
 
-    def isDiagonal(fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
+    def isDiagonal(self, fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
         if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
             raise PSInvalidMoveException()
         return True
