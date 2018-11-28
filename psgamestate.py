@@ -42,8 +42,12 @@ class PSGameState:
     #
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
         middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
-        if get(fromRow, fromCol) == 0 or get(toRow, fromCol) == 1 or get(middle[0], middle[1] == 0):
-            return False
+        try:
+            if self.board.get(fromRow, fromCol) == 0 or self.board.get(toRow, fromCol) == 1 or self.board.get(middle[0], middle[1]) == 0 or isDiagonal(fromRow, fromCol, toRow, toCol) == False:
+                return False
+            return True
+        except:
+            print("Invalid Move\n")
 
     def isOutOfBounds(row: int, col: int) -> bool:
         ''' Checks if location is in board '''
@@ -55,3 +59,8 @@ class PSGameState:
 
     def isFinished() -> bool:
         pass
+
+    def isDiagonal(fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
+        if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
+            raise PSInvalidMoveException()
+        return True
