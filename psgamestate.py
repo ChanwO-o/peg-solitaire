@@ -14,24 +14,17 @@ class PSGameState:
     def __init__(self, board: [[int]]):
         self.board = psBoard()
 
-    def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> (row, col):
-
-    def makeMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> None:
+    def makeMove(self, row: int, col: int, val: int) -> None:
         ''' add and remove peg on the board '''
-        if isValidMove() == True:
-            self.board.addPeg(toRow, toCol)
-            self.boead.removePeg(fromRow, fromCol)
+        self.board[row][col] = val
+        self.board.add()
+        self.boead.remove()
 
     def start():
         pass
 
-    # Return false if move is not valid, return true if the move is possible.
-    # 1. Check Peg if Peg exists on from coordinate
-    # 2. Check if moving is digonal
-    # 3. Check if Peg exists on middle of from coordinate and to coordinate
-    # 4. CHen if Peg exist on to coordinate, if exist return false.
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
-        pass
+        if()
 
     def isOutOfBounds(row: int, col: int) -> bool:
         ''' Checks if location is in board '''
