@@ -64,7 +64,7 @@ class PSGameState:
                 return False
             return True
         except:
-            print("Invalid Move\n")
+            raise PSInvalidMoveException()
 
     def isOutOfBounds(row: int, col: int) -> bool:
         ''' Checks if location is in board '''
@@ -74,8 +74,28 @@ class PSGameState:
             return True
         # TODO: check for corners
 
+    # 1. Loop all pegs and check whether there are valid moves or not
+    # Return True is game state is finished.
+    # Return False if game state is not finished.
     def isFinished() -> bool:
-        pass
+        rows = self.board.getRows()
+        cols = self.board.getCols()
+        for row in range(rows):
+            for col in range(cols):
+                peg = get(row, col)
+                if peg == -1:
+                    pass
+                elif peg == 1:
+                    moves = getPossibleMoves(row, col)
+                    for i in range(len(moves)):
+                        if isValidMove(row, col, moves[i][0], moves[i][1]) == True:
+                            return False
+        raise PSGameOverException()
+
+    # helper function for isFinished.
+    # Take row and col of current position and return all the possible moves in list.
+    def getPossibleMoves(row, col) -> list of sets:
+        return [(row - 2, col), (row + 2, col), (row, col - 2), (row, col + 2)]
 
     def isDiagonal(fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
         if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
