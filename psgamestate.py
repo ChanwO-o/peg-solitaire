@@ -32,14 +32,14 @@ class PSGameState:
             self.boead.removePeg(fromRow, fromCol)
 
     def start():
-        pass
+        while(isFinished() != True):
 
-    # Return false if move is not valid, return true if the move is possible.
-    # 1. Check Peg if Peg exists on from coordinate
-    # 2. CHen if Peg exist on to coordinate, if exist return false.
-    # 3. Check if moving is digonal
-    # 4. Check if Peg exists on middle of from coordinate and to coordinate
-    #
+            # Return false if move is not valid, return true if the move is possible.
+            # 1. Check Peg if Peg exists on from coordinate
+            # 2. CHen if Peg exist on to coordinate, if exist return false.
+            # 3. Check if moving is digonal
+            # 4. Check if Peg exists on middle of from coordinate and to coordinate
+            #
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
         middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
         try:
@@ -57,8 +57,28 @@ class PSGameState:
             return True
         # TODO: check for corners
 
+    # 1. Loop all pegs and check whether there are valid moves or not
+    # Return True is game state is finished.
+    # Return False if game state is not finished.
     def isFinished() -> bool:
-        pass
+        rows = self.board.getRows()
+        cols = self.board.getCols()
+        for row in range(rows):
+            for col in range(cols):
+                peg = get(row, col)
+                if peg == -1:
+                    pass
+                elif peg == 1:
+                    moves = getPossibleMoves(row, col)
+                    for i in range(len(moves)):
+                        if isValidMove(row, col, moves[i][0], moves[i][1]) == True:
+                            return False
+        return True
+
+    # helper function for isFinished.
+    # Take row and col of current position and return all the possible moves in list.
+    def getPossibleMoves(row, col) -> list of sets:
+        return [(row - 2, col), (row + 2, col), (row, col - 2), (row, col + 2)]
 
     def isDiagonal(fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
         if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
