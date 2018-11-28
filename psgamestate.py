@@ -10,11 +10,20 @@ Verify the input and move.
 
 
 class PSGameState:
-
     def __init__(self, board: [[int]]):
         self.board = psBoard()
 
     def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> (row, col):
+        if fromRow - toRow > 0 and fromCol - toCol == 0:
+            return (fromRow - 1, fromCol)
+        elif fromRow - toRow < 0 and fromCol - toCol == 0:
+            return (fromRow + 1, fromCol)
+        elif fromCol - toCol > 0 and fromRow - toRow == 0:
+            return (fromRow, fromCol - 1)
+        elif fromCol - toCol < 0 and fromRow - toRow == 0:
+            return (fromRow, fromCol + 1)
+        else:
+            pass  # throwexcemption
 
     def makeMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> None:
         ''' add and remove peg on the board '''
@@ -27,11 +36,14 @@ class PSGameState:
 
     # Return false if move is not valid, return true if the move is possible.
     # 1. Check Peg if Peg exists on from coordinate
-    # 2. Check if moving is digonal
-    # 3. Check if Peg exists on middle of from coordinate and to coordinate
-    # 4. CHen if Peg exist on to coordinate, if exist return false.
+    # 2. CHen if Peg exist on to coordinate, if exist return false.
+    # 3. Check if moving is digonal
+    # 4. Check if Peg exists on middle of from coordinate and to coordinate
+    #
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
-        pass
+        middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
+        if get(fromRow, fromCol) == 0 or get(toRow, fromCol) == 1 or get(middle[0], middle[1] == 0):
+            return False
 
     def isOutOfBounds(row: int, col: int) -> bool:
         ''' Checks if location is in board '''
