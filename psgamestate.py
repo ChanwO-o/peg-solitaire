@@ -32,7 +32,23 @@ class PSGameState:
             self.boead.removePeg(fromRow, fromCol)
 
     def start():
-        pass
+        while True:
+            try:
+                isFinished()
+
+                while True:
+                    from_input = getFromInput()
+                    to_input = getToInput()
+                    try:
+                        self.makeMove(from_move[0], from_move[1], to_move[0], to_move[1])
+                        break
+
+                    except (PSInvalidMoveException()):
+                        print("INVALID MOVE")
+
+            except (PSGameOverException()):
+                print("The Game is Over!")
+                break
 
     # Return false if move is not valid, return true if the move is possible.
     # 1. Check Peg if Peg exists on from coordinate
@@ -40,6 +56,7 @@ class PSGameState:
     # 3. Check if moving is digonal
     # 4. Check if Peg exists on middle of from coordinate and to coordinate
     #
+
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
         middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
         try:
@@ -64,3 +81,35 @@ class PSGameState:
         if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
             raise PSInvalidMoveException()
         return True
+
+
+def getFromInput() -> (int, int):
+    while True:
+        from_input = input("FROM: ")
+        from_input = from_input.split()
+        if len(from_input) == 2:
+            try:
+                from_row = int(from_input[0])
+                from_col = int(from_input[1])
+                from_move = (from_row, from_col)
+                break
+            except:
+                print("INVALID MOVE")
+        else:
+            print("INVALID MOVE")
+
+
+def getToInput() -> (int, int):
+    while True:
+        to_input = input("TO: ")
+        to_input = to_input.split()
+        if len(to_input) == 2:
+            try:
+                to_row = int(to_input[0])
+                to_col = int(to_input[1])
+                to_move = (to_row, to_col)
+                break
+            except:
+                print("INVALID MOVE")
+        else:
+            print("INVALID MOVE")
