@@ -7,9 +7,15 @@ import psgamestate
 
 GAMESTATE = None
     
-def getNewBoard(rows:int, cols:int) -> [[bool]]:
+def getNewBoard(rows:int, cols:int) -> [[int]]:
     ''' Creates a new game board with specified rows and columns '''
-    pass
+    board = []
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            row.append(1)
+        board.append(row)
+    return board
 
 def makeMove() -> None:
     ''' '''
