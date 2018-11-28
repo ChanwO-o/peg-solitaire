@@ -23,5 +23,16 @@ class PSGameState:
     def start():
         pass
 
-    def isFinished():
+    def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
+        if()
+
+    def isOutOfBounds(row: int, col: int) -> bool:
+        ''' Checks if location is in board '''
+        if row < 0 or row > self.getRows():
+            return True
+        if col < 0 or col > self.getCols():
+            return True
+        # TODO: check for corners
+
+    def isFinished() -> bool:
         pass
