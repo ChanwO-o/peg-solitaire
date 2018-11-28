@@ -7,10 +7,10 @@ Created on Oct 28, 2018
 class PSOutOfBoundsException(Exception):
     pass
 
-class PSInvalidMove(Exception):
+class PSInvalidMoveException(Exception):
     pass
 
-class PSGameOverError(Exception):
+class PSGameOverException(Exception):
     pass
 
 class PSGameState:
