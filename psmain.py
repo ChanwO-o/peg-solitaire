@@ -13,8 +13,11 @@ def getNewBoard(rows:int, cols:int) -> [[int]]:
     for r in range(rows):
         row = []
         for c in range(cols):
-            row.append(1)
+            row.append(1)   # fill with 1
         board.append(row)
+
+    # center empty
+    board[int(rows/2)][int(cols/2)] = 0
     return board
 
 def makeMove() -> None:
@@ -27,6 +30,6 @@ def printBoard() -> None:
 
 
 if __name__== "__main__":
-    board = getNewBoard(10, 10)
+    board = getNewBoard(7, 7)
     GAMESTATE = psgamestate.PSGameState(board)
     printBoard()

@@ -24,6 +24,10 @@ class PSGameState:
         ''' Returns value of peg at coordinate (-1 0 or 1) '''
         pass
 
+    def set(self, row:int, col:int, val:int) -> None:
+        ''' Sets coordinate value to val '''
+        pass
+
     def getRows(self) -> int:
         ''' Returns number of rows of board '''
         pass
