@@ -58,7 +58,7 @@ class psBoard:
             print(r, ' ')
             for c in range(self.getCols()):
                 print(self.get(r, c))
-            print('\n')
+        print('\n')
 
     def isOutOfBounds(self, row: int, col: int) -> bool:
         ''' Checks if location is in board '''
