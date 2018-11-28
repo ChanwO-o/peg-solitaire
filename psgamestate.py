@@ -13,9 +13,12 @@ class PSInvalidMoveException(Exception):
 class PSGameOverException(Exception):
     pass
 
+
 class PSGameState:
-    def __init__(self, rows:int, cols:int):
-        self.board = self.createNewBoard(rows, cols)
+    
+    def __init__(self, board:[[bool]]):
+##        self.board = createNewBoard(rows, cols)
+        pass
         
         
            
