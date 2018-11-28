@@ -13,12 +13,17 @@ class psBoard:
     def getNewBoard(rows: int, cols: int) -> [[int]]:
         ''' Creates a new game board with specified rows and columns '''
         board = []
+        boundindex = (rows - 3) / 2
         for r in range(rows):
             row = []
             for c in range(cols):
+                if r < boundindex or r > (rows - boundindex - 1):
+                    if c < boundindex or c > (cols - boundindex - 1):
+                        row.append(-1)
+                        continue
                 row.append(1)   # fill with 1
             board.append(row)
-
+        
         board[int(rows/2)][int(cols/2)] = 0 # center empty
         return board
 
