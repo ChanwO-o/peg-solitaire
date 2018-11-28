@@ -32,14 +32,14 @@ class PSGameState:
             self.boead.removePeg(fromRow, fromCol)
 
     def start():
-        while(isFinished() != True):
+        pass
 
-            # Return false if move is not valid, return true if the move is possible.
-            # 1. Check Peg if Peg exists on from coordinate
-            # 2. CHen if Peg exist on to coordinate, if exist return false.
-            # 3. Check if moving is digonal
-            # 4. Check if Peg exists on middle of from coordinate and to coordinate
-            #
+    # Return false if move is not valid, return true if the move is possible.
+    # 1. Check Peg if Peg exists on from coordinate
+    # 2. CHen if Peg exist on to coordinate, if exist return false.
+    # 3. Check if moving is digonal
+    # 4. Check if Peg exists on middle of from coordinate and to coordinate
+    #
     def isValidMove(fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
         middle = calcPegMiddle(fronRow, fromCol, toRow, toCol)
         try:
@@ -73,7 +73,7 @@ class PSGameState:
                     for i in range(len(moves)):
                         if isValidMove(row, col, moves[i][0], moves[i][1]) == True:
                             return False
-        return True
+        raise PSGameOverException()
 
     # helper function for isFinished.
     # Take row and col of current position and return all the possible moves in list.
