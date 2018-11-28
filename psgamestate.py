@@ -19,9 +19,19 @@ class PSGameState:
     def __init__(self, board:[[int]]):
 ##        self.board = createNewBoard(rows, cols)
         pass
+
+    def get(self, row:int, col:int) -> int:
+        ''' Returns value of peg at coordinate (-1 0 or 1) '''
+        pass
+
+    def getRows(self) -> int:
+        ''' Returns number of rows of board '''
+        pass
+
+    def getCols(self) -> int:
+        ''' Returns number of cols of board '''
+        pass
         
-        
-           
     def updateBoard():
         pass
 
