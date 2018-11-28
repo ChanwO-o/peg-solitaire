@@ -9,3 +9,7 @@ class PSInvalidMoveException(Exception):
 
 class PSGameOverException(Exception):
     pass
+
+
+class GameOverException(Exception):
+    pass
