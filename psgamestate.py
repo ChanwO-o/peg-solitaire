@@ -34,7 +34,10 @@ class PSGameState:
             self.board.addPeg(toRow, toCol)
             self.boead.removePeg(fromRow, fromCol)
 
+<<<<<<< HEAD
     def start(self):
+=======
+>>>>>>> e6845a3e7bbd785bf27a8a00ea14a5be8b7fb1a0
         while True:
             try:
                 self.isFinished()
