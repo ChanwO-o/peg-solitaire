@@ -34,10 +34,8 @@ class PSGameState:
             self.board.addPeg(toRow, toCol)
             self.boead.removePeg(fromRow, fromCol)
 
-<<<<<<< HEAD
     def start(self):
-=======
->>>>>>> e6845a3e7bbd785bf27a8a00ea14a5be8b7fb1a0
+        self.board.printBoard()
         while True:
             try:
                 self.isFinished()
@@ -47,6 +45,7 @@ class PSGameState:
                     to_input = getToInput()
                     try:
                         self.makeMove(from_move[0], from_move[1], to_move[0], to_move[1])
+                        self.board.printBoard()
                         break
 
                     except (PSInvalidMoveException()):

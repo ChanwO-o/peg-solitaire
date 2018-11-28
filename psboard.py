@@ -54,10 +54,10 @@ class psBoard:
 
     def printBoard(self) -> None:
         ''' Display the board on the console '''
-        for r in range(getRows()):
+        for r in range(self.getRows()):
             print(r, ' ')
-            for c in range(getCols()):
-                print(get(r, c))
+            for c in range(self.getCols()):
+                print(self.get(r, c))
             print('\n')
 
     def isOutOfBounds(self, row: int, col: int) -> bool:
