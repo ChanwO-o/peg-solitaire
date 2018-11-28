@@ -16,9 +16,6 @@ class PSGameOverException(Exception):
 class PSGameState:
     def __init__(self, rows:int, cols:int):
         self.board = self.createNewBoard(rows, cols)
-    
-    def createNewBoard(self, rows:int, cols:int) -> [[bool]]:
-        '''Creates a new game board with specified rows and columns'''
         
         
            
