@@ -3,7 +3,8 @@ Created on Oct 28, 2018
 
 @author: cmins
 '''
-
+import psExceptions
+import psgamestate
 
 class psBoard:
     def __init__(self):
@@ -27,14 +28,15 @@ class psBoard:
 
     def get(self, row: int, col: int) -> int:
         ''' Returns value of peg at coordinate (-1 0 or 1) '''
-        # TODO check if coordinate is not outofbounds
+        if psgamestate.isOutOfBounds(row, col):
+            raise psExceptions.PSOutOfBoundsException()
         return self._board[row][col]
 
-    def addPeg():
-        pass
+    def addPeg(self, row:int, col:int) -> None:
+        self._board[row][col] = 1
 
-    def removePeg():
-        pass
+    def removePeg(self, row:int, col:int) -> None:
+        self._board[row][col] = 0
     
     def getRows(self) -> int:
         ''' Returns number of rows of board '''
@@ -44,8 +46,10 @@ class psBoard:
         ''' Returns number of cols of board '''
         return len(self._board[0])
 
-
-
-    def printBoard() -> None:
+    def printBoard(self) -> None:
         ''' Display the board on the console '''
-        pass
+        for r in range(getRows()):
+            print(r, ' ')
+            for c in range(getCols()):
+                print(get(r,c))
+            print('\n')
