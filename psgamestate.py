@@ -47,7 +47,7 @@ class PSGameState:
                 return False
             return True
         except:
-            print("Invalid Move\n")
+            raise PSInvalidMoveException()
 
     def isOutOfBounds(row: int, col: int) -> bool:
         ''' Checks if location is in board '''
