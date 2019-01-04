@@ -30,9 +30,21 @@ class PSGameState:
 
     def makeMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> None:
         ''' add and remove peg on the board '''
-        if self.isValidMove() == True:
+
+        # Jan,04 Joowon
+        # self.isValidMove() was calling without any arguments.
+        # This function was not remove middle peg
+        # So, I changed it to remove middle peg when make move.
+        mid = self.calcPegMiddle(fromRow, fromCol, toRow, toCol)  # get middle peg
+        if self.isValidMove(fromRow, fromCol, toRow, toCol) == True:
             self.board.addPeg(toRow, toCol)
-            self.boead.removePeg(fromRow, fromCol)
+            # Jan,04 Joowon
+            # self.boead.removePeg(fromRow, fromCol)
+            # boead -> board
+            self.board.removePeg(fromRow, fromCol)
+            self.board.removePeg(mid[0], mid[1])  # added to remove middle peg.
+        else:
+            raise PSInvalidMoveException()
 
     def start(self):
         self.board.printBoard()
@@ -44,11 +56,14 @@ class PSGameState:
                     from_input = getFromInput()
                     to_input = getToInput()
                     try:
-                        self.makeMove(from_move[0], from_move[1], to_move[0], to_move[1])
+                        # debugging
+                        # print(self.board.get(from_input[0], from_input[1]))
+                        # print(self.board.get(to_input[0], to_input[1]))
+                        self.makeMove(from_input[0], from_input[1], to_input[0], to_input[1])
                         self.board.printBoard()
                         break
 
-                    except (PSInvalidMoveException()):
+                    except (PSInvalidMoveException):
                         print("INVALID MOVE")
 
             except (PSGameOverException):
@@ -60,7 +75,6 @@ class PSGameState:
     # 2. CHen if Peg exist on to coordinate, if exist return false.
     # 3. Check if moving is digonal
     # 4. Check if Peg exists on middle of from coordinate and to coordinate
-    #
 
     def isValidMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
         middle = self.calcPegMiddle(fromRow, fromCol, toRow, toCol)
@@ -88,8 +102,14 @@ class PSGameState:
                 elif peg == 1:
                     moves = self.getPossibleMoves(row, col)
                     for i in range(len(moves)):
-                        if self.isValidMove(row, col, moves[i][0], moves[i][1]) == True:
-                            return False
+                        # print(row, col, moves[i][0], moves[i][1])
+                        # Joowon Jan,04
+                        # added try except structure
+                        try:
+                            if self.isValidMove(row, col, moves[i][0], moves[i][1]) == True:
+                                return False
+                        except (PSInvalidMoveException()):
+                            print('invalid moves')
         raise PSGameOverException()
 
     # helper function for isFinished.
@@ -107,12 +127,13 @@ def getFromInput() -> (int, int):
     while True:
         from_input = input("FROM: ")
         from_input = from_input.split()
+        print(from_input)
         if len(from_input) == 2:
             try:
                 from_row = int(from_input[0])
                 from_col = int(from_input[1])
-                from_move = (from_row, from_col)
-                break
+                # Joowon, Jan, 04 changed it to return coordinate of input instead of set self value and break
+                return (from_row, from_col)
             except:
                 print("INVALID MOVE")
         else:
@@ -127,8 +148,8 @@ def getToInput() -> (int, int):
             try:
                 to_row = int(to_input[0])
                 to_col = int(to_input[1])
-                to_move = (to_row, to_col)
-                break
+                # Joowon, Jan, 04 changed it to return coordinate of input instead of set self value and break
+                return (to_row, to_col)
             except:
                 print("INVALID MOVE")
         else:

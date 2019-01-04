@@ -3,6 +3,8 @@ Created on Oct 28, 2018
 
 @author: cmins
 '''
+# Every coordinates of first value is rows and second value is col
+
 import psExceptions
 import psgamestate
 
@@ -10,6 +12,13 @@ import psgamestate
 class psBoard:
     def __init__(self):
         self._board = self.getNewBoard(7, 7)
+        # Joowon Jan,04,2019
+        # Add variable to store the value of number of rows and columns
+        # Set dafault as 7
+        # Will be used later when we add resizing of board.
+        self.numOfCols = 7
+        self.numOfRows = 7
+        # end
 
     def getNewBoard(self, rows: int, cols: int) -> [[int]]:
         ''' Creates a new game board with specified rows and columns '''
@@ -46,11 +55,22 @@ class psBoard:
 
     def getRows(self) -> int:
         ''' Returns number of rows of board '''
-        return len(self._board)
+        # return len(self._board)
+        # Joowon Jan,04,2019
+        # This should return exact value of length
+        # I changed it to return variable
+        return self.numOfRows
+        # end
 
     def getCols(self) -> int:
         ''' Returns number of cols of board '''
-        return len(self._board[0])
+        # return len(self._board[0])
+        # Joowon Jan,04,2019
+        # return len(self._board)
+        # This should return exact value of length
+        # I changed it to return variable
+        return self.numOfCols
+        # end
 
     def printBoard(self) -> None:
         ''' Display the board on the console '''
