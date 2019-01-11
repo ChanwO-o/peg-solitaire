@@ -55,15 +55,20 @@ class PSGameState:
                 while True:
                     from_input = getFromInput()
                     to_input = getToInput()
-                    try:
-                        # debugging
-                        # print(self.board.get(from_input[0], from_input[1]))
-                        # print(self.board.get(to_input[0], to_input[1]))
-                        self.makeMove(from_input[0], from_input[1], to_input[0], to_input[1])
-                        self.board.printBoard()
-                        break
 
-                    except (PSInvalidMoveException):
+                    if (from_input[0] == to_input[0] or from_input[1] == to_input[1]):
+                        try:
+                            # debugging
+                            # print(self.board.get(from_input[0], from_input[1]))
+                            # print(self.board.get(to_input[0], to_input[1]))
+                            self.makeMove(from_input[0], from_input[1], to_input[0], to_input[1])
+                            self.board.printBoard()
+                            break
+
+                        except (PSInvalidMoveException):
+                            print("INVALID MOVE")
+
+                    else:
                         print("INVALID MOVE")
 
             except (PSGameOverException):
