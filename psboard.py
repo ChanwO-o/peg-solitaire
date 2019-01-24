@@ -5,11 +5,11 @@ Created on Oct 28, 2018
 '''
 # Every coordinates of first value is rows and second value is col
 
-import psExceptions
+import psexceptions
 import psgamestate
 
 
-class psBoard:
+class PSBoard:
     def __init__(self):
         self._board = self.getNewBoard(7, 7)
         # Joowon Jan,04,2019
@@ -44,7 +44,7 @@ class psBoard:
     def get(self, row: int, col: int) -> int:
         ''' Returns value of peg at coordinate (-1 0 or 1) '''
         if self.isOutOfBounds(row, col):
-            raise psExceptions.PSOutOfBoundsException()
+            raise psexceptions.PSOutOfBoundsException()
         return self._board[row][col]
 
     def addPeg(self, row: int, col: int) -> None:
@@ -72,6 +72,32 @@ class psBoard:
         return self.numOfCols
         # end
 
+	# Chan Woo, Jan, 23 moved coordinate calculation functions from psgamestate to psboard
+    def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> ():
+        if fromRow - toRow > 0 and fromCol - toCol == 0:
+            return (fromRow - 1, fromCol)
+        elif fromRow - toRow < 0 and fromCol - toCol == 0:
+            return (fromRow + 1, fromCol)
+        elif fromCol - toCol > 0 and fromRow - toRow == 0:
+            return (fromRow, fromCol - 1)
+        elif fromCol - toCol < 0 and fromRow - toRow == 0:
+            return (fromRow, fromCol + 1)
+        else:
+            pass  # throwexcemption
+			
+    def isDiagonal(self, fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
+        if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
+            return False
+        return True
+		
+    def isOutOfBounds(self, row: int, col: int) -> bool:
+        ''' Checks if location is in board '''
+        if row < 0 or row > self.getRows():
+            return True
+        if col < 0 or col > self.getCols():
+            return True
+        # TODO: check for corners
+
     def printBoard(self) -> None:
         ''' Display the board on the console '''
         for r in range(self.getRows()):
@@ -81,11 +107,3 @@ class psBoard:
                 else:
                     print(self.get(r, c), end=' ')
             print('\n')
-
-    def isOutOfBounds(self, row: int, col: int) -> bool:
-        ''' Checks if location is in board '''
-        if row < 0 or row > self.getRows():
-            return True
-        if col < 0 or col > self.getCols():
-            return True
-        # TODO: check for corners

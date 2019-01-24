@@ -9,24 +9,12 @@ Verify the input and move.
 '''
 
 import psboard
-from psExceptions import *
+from psexceptions import *
 
 
 class PSGameState:
     def __init__(self):
-        self.board = psboard.psBoard()
-
-    def calcPegMiddle(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> ():
-        if fromRow - toRow > 0 and fromCol - toCol == 0:
-            return (fromRow - 1, fromCol)
-        elif fromRow - toRow < 0 and fromCol - toCol == 0:
-            return (fromRow + 1, fromCol)
-        elif fromCol - toCol > 0 and fromRow - toRow == 0:
-            return (fromRow, fromCol - 1)
-        elif fromCol - toCol < 0 and fromRow - toRow == 0:
-            return (fromRow, fromCol + 1)
-        else:
-            pass  # throwexcemption
+        self.board = psboard.PSBoard()
 
     def makeMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> None:
         ''' add and remove peg on the board '''
@@ -48,32 +36,32 @@ class PSGameState:
 
     def start(self):
         self.board.printBoard()
-        while True:
-            try:
-                self.isFinished()
+        # while True:
+            # try:
+                # self.isFinished()
 
-                while True:
-                    from_input = getFromInput()
-                    to_input = getToInput()
+                # while True:
+                    # from_input = getFromInput()
+                    # to_input = getToInput()
 
-                    if (from_input[0] == to_input[0] or from_input[1] == to_input[1]):
-                        try:
-                            # debugging
-                            # print(self.board.get(from_input[0], from_input[1]))
-                            # print(self.board.get(to_input[0], to_input[1]))
-                            self.makeMove(from_input[0], from_input[1], to_input[0], to_input[1])
-                            self.board.printBoard()
-                            break
+                    # if (from_input[0] == to_input[0] or from_input[1] == to_input[1]):
+                        # try:
+                            # # debugging
+                            # # print(self.board.get(from_input[0], from_input[1]))
+                            # # print(self.board.get(to_input[0], to_input[1]))
+                            # self.makeMove(from_input[0], from_input[1], to_input[0], to_input[1])
+                            # self.board.printBoard()
+                            # break
 
-                        except (PSInvalidMoveException):
-                            print("INVALID MOVE")
+                        # except (PSInvalidMoveException):
+                            # print("INVALID MOVE")
 
-                    else:
-                        print("INVALID MOVE")
+                    # else:
+                        # print("INVALID MOVE")
 
-            except (PSGameOverException):
-                print("The Game is Over!")
-                break
+            # except (PSGameOverException):
+                # print("The Game is Over!")
+                # break
 
     # Return false if move is not valid, return true if the move is possible.
     # 1. Check Peg if Peg exists on from coordinate
@@ -82,9 +70,9 @@ class PSGameState:
     # 4. Check if Peg exists on middle of from coordinate and to coordinate
 
     def isValidMove(self, fromRow: int, fromCol: int, toRow: int, toCol: int) -> bool:
-        middle = self.calcPegMiddle(fromRow, fromCol, toRow, toCol)
+        middle = self.board.calcPegMiddle(fromRow, fromCol, toRow, toCol)
         try:
-            if self.board.get(fromRow, fromCol) == 0 or self.board.get(toRow, fromCol) == 1 or self.board.get(middle[0], middle[1]) == 0 or self.isDiagonal(fromRow, fromCol, toRow, toCol) == False:
+            if self.board.get(fromRow, fromCol) == 0 or self.board.get(toRow, fromCol) == 1 or self.board.get(middle[0], middle[1]) == 0 or self.board.isDiagonal(fromRow, fromCol, toRow, toCol) == False:
                 return False
             return True
         except (PSOutOfBoundsException):
@@ -113,7 +101,7 @@ class PSGameState:
                         try:
                             if self.isValidMove(row, col, moves[i][0], moves[i][1]) == True:
                                 return False
-                        except (PSInvalidMoveException()):
+                        except (PSInvalidMoveException):
                             print('invalid moves')
         raise PSGameOverException()
 
@@ -121,41 +109,3 @@ class PSGameState:
     # Take row and col of current position and return all the possible moves in list.
     def getPossibleMoves(self, row, col) -> list:
         return [(row - 2, col), (row + 2, col), (row, col - 2), (row, col + 2)]
-
-    def isDiagonal(self, fromcol: int, fromrow: int, tocol: int, torow: int) -> bool:
-        if (fromcol - tocol) != 0 and (fromrow - torow) != 0:
-            raise PSInvalidMoveException()
-        return True
-
-
-def getFromInput() -> (int, int):
-    while True:
-        from_input = input("FROM: ")
-        from_input = from_input.split()
-        print(from_input)
-        if len(from_input) == 2:
-            try:
-                from_row = int(from_input[0])
-                from_col = int(from_input[1])
-                # Joowon, Jan, 04 changed it to return coordinate of input instead of set self value and break
-                return (from_row, from_col)
-            except:
-                print("INVALID MOVE")
-        else:
-            print("INVALID MOVE")
-
-
-def getToInput() -> (int, int):
-    while True:
-        to_input = input("TO: ")
-        to_input = to_input.split()
-        if len(to_input) == 2:
-            try:
-                to_row = int(to_input[0])
-                to_col = int(to_input[1])
-                # Joowon, Jan, 04 changed it to return coordinate of input instead of set self value and break
-                return (to_row, to_col)
-            except:
-                print("INVALID MOVE")
-        else:
-            print("INVALID MOVE")
