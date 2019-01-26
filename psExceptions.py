@@ -1,4 +1,3 @@
-
 class PSOutOfBoundsException(Exception):
     pass
 
